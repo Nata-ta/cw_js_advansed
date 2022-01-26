@@ -38,9 +38,9 @@
   aLinkToGoogle.href = "http://google.com.ua";
 
   var img = document.createElement('img');
-    img.src = "https://www.google.com.ua/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png";
+  img.src = "https://www.google.com.ua/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png";
 
-    var div = document.createElement('div');
+  var div = document.createElement('div');
   div.className = 'menu';
   
   var aLinkFirst = document.createElement('a');
@@ -60,7 +60,6 @@
   div.append(aLinkFirst, aLinkSecond, aLinkThird)
 
   header.append(aLinkToGoogle, div);
-  console.log(header);
 
   var idElem = document.getElementById('app');
   idElem.appendChild(header);
