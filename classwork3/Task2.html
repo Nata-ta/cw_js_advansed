@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Task 2</title>
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="wrap" id="wrap">
+      <header>
+        <button id="HouseButton" data-img="house">House</button>
+        <button id="TreeButton" data-img="tree">Tree</button>
+        <button id="PlaneButton" data-img="plane">Plane</button>
+      </header>
+      <div id="chooseYourBlock">
+
+      </div>
+      <div id="result">
+
+      </div>
+    </div>
+    <script>
+        // Задание:
+
+        // По нажатию на кнопку, в блок с id chooseYourBlock выводить иконку с нажатой кнопки:
+
+        // House:  https://image.flaticon.com/icons/svg/149/149064.svg
+        // Tree: https://image.flaticon.com/icons/svg/620/620705.svg
+        // Plane: https://image.flaticon.com/icons/svg/579/579268.svg
+
+        // Под иконкой расположить еще одну кнопку, по нажатию на которую из соответствующего массива
+        // подтягивается случайная картинка с изображением в блок result.
+        // Предыдущий результат очищается.
+
+      var house = [
+        "https://static.pexels.com/photos/106399/pexels-photo-106399.jpeg",
+        "https://i.pinimg.com/736x/7f/be/50/7fbe50ec634c65709d7fe6ac267c4e6f--large-garage-plans-house-plans-large-family.jpg",
+        "https://i.ytimg.com/vi/Xx6t0gmQ_Tw/maxresdefault.jpg"
+      ];
+      var plane = [
+        "http://www.x-plane.com/wp-content/uploads/2014/08/B777-200ER.png",
+        "https://media.cntraveler.com/photos/57067c1e9adc6caf5afe3f4c/master/pass/plane-landing-cr-getty-sb10062851ai-001.jpg",
+        "https://media.wired.com/photos/59323264a31264584499367f/master/w_1024,c_limit/diesel-plane-inline.jpg"
+      ];
+      var tree = [
+        "https://static.pexels.com/photos/56875/tree-dawn-nature-bucovina-56875.jpeg",
+        "https://c1.staticflickr.com/8/7218/7184786016_1ddab461e8_b.jpg",
+        "https://media.istockphoto.com/photos/child-hugging-tree-with-heart-shape-on-it-picture-id1226721220?s=612x612"
+      ];
+
+      var buttons = document.querySelectorAll('button');
+      var iconBlock = document.getElementById('chooseYourBlock');
+      var resultBlock = document.getElementById('result');
+      var bigObj = {house, plane, tree};
+
+      console.log(buttons);
+
+      var iconsObj = {
+        house:  'https://media.istockphoto.com/photos/beautiful-residential-home-exterior-on-bright-sunny-day-with-green-picture-id1211174464?s=612x612',
+        tree: 'https://media.istockphoto.com/photos/large-oak-tree-picture-id629264970?s=612x612',
+        plane: 'https://media.istockphoto.com/photos/passenger-airplane-flying-above-clouds-during-sunset-picture-id155439315?s=612x612'
+      };
+
+      function showIcon(e){
+        var val = e.target.innerText.toLowerCase();
+        console.log(e);
+      };
+
+      buttons.forEach( (btn) => {
+        btn.addEventListener('click', showImage)
+      });
+
+      function getRandomIntInclusive(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+      function showNewImg(e) {
+        resultBlock.innerHTML = '';
+        var newImg = document.createElement('img');
+        newImg.src = bigObj[e.target.dataset.icon][getRandomIntInclusive(0, 2)];
+
+        resultBlock.appendChild(newImg);
+      };
+
+      function creatNewBtn(param) {    
+        var newBtn = document.createElement('button');
+        newBtn.innerText = 'New button. Click here';
+        newBtn.addEventListener('click', showNewImg);
+        newBtn.dataset.icon = param;
+
+        iconBlock.appendChild(newBtn);
+      };
+
+      function showImage(event) {
+        iconBlock.innerHTML = '';
+        resultBlock.innerHTML = '';
+
+        var img = document.createElement('img');
+        img.src = iconsObj[event.target.dataset.img];
+
+        iconBlock.appendChild(img);
+
+        creatNewBtn(event.target.dataset.img);
+      };
+
+    </script>
+  </body>
+</html>
