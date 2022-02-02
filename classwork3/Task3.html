@@ -80,63 +80,57 @@
 
       */
 
-      // var containers = document.querySelectorAll('.roadMap__container');
-      // var navButton = document.querySelectorAll('.navButton');
-      // var roadMapPoint = document.querySelectorAll('.roadMapPoint');
+      function removeBall(container) {
+        container.forEach(function(point){
+          point.classList.remove('ball');
+        })
+      }
 
-      // containers.forEach( function( container ){
-      //   console.log( container );
-      //   var ball = container.querySelector('.ball');
-      //   console.log( ball.dataset.id );
-      // })
+      function btnDisabled(container) {
+        var navButtons = container.querySelectorAll('.navButton');
+        var roadMapPoints = container.querySelectorAll('.roadMapPoint');
+        let ball = container.querySelector('.ball');
 
+        container.querySelector(".navButton[data-direction='<']").removeAttribute("disabled");
+        container.querySelector(".navButton[data-direction='>']").removeAttribute("disabled");
 
-      let containers = document.querySelectorAll('.roadMap__container');
-      let navButtons = document.querySelectorAll('.navButton');
-      let roadMapPoints = document.querySelectorAll('.roadMapPoint');
+        if(ball == roadMapPoints[0]) {
+          container.querySelector(".navButton[data-direction='<']").setAttribute('disabled', true);
+        } else if(ball === roadMapPoints[roadMapPoints.length-1]) {
+          container.querySelector(".navButton[data-direction='>']").setAttribute('disabled', true);
+        }
+      }
 
-      let counter = 0;
+      var containers = document.querySelectorAll('.roadMap__container');
 
-      containers.forEach( function( container ){
-        container.addEventListener('click', function(event) {
-          
-          var target = event.target;
-            
-            function activeBall(n) {
-              for(element of roadMapPoints) {
-                element.classList.remove('ball');
+      containers.forEach( function(container){
+        var roadMapContainer = container.querySelector('.roadMap');
+        var roadMapPoints = roadMapContainer.querySelectorAll('.roadMapPoint');
+        var navButtons = container.querySelectorAll('button');
+
+        navButtons.forEach(function(button) {
+
+          button.addEventListener('click', function(event) {
+            var ball = container.querySelector('.ball');
+
+            removeBall(roadMapPoints);
+              
+            if(event.target.dataset.direction == '>'){
+              if (+ball.dataset.id < roadMapPoints.length) {           
+                roadMapContainer.querySelector(`[data-id~='${+ball.dataset.id + 1}']`).classList.add('ball');
+              }   
+            } else {
+                if(+ball.dataset.id > 1) {            
+                  roadMapContainer.querySelector(`[data-id~='${+ball.dataset.id - 1}']`).classList.add('ball');
+                } 
               }
-              roadMapPoints[n].classList.add('ball');
-            }
 
-            function nextPoint(param) {
-              if(counter == roadMapPoints.length - 1) {
-                param.setAttribute('disabled', true);
-              } else {
-                document.querySelector(".navButton[data-direction='<']").removeAttribute("disabled");
-                counter++;
-                activeBall(counter);
-              }
-            }
-
-            function prevPoint(param) {
-              if(counter == 0) {
-                param.setAttribute('disabled', true);
-              } else {
-                document.querySelector(".navButton[data-direction='>']").removeAttribute("disabled");
-                counter--;
-                activeBall(counter);
-              }
-            }
-
-            if(target.dataset.direction == '<'){
-              target = prevPoint(target);
-            } else if(target.dataset.direction == '>'){
-              target = nextPoint(target);
-            }
+              btnDisabled(container)
           })
+        })
+
       }) 
-      
+
     </script>
   </body>
 
