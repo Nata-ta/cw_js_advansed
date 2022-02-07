@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Form work1</title>
+  <script>
+    /*
+      Задание:
+
+      1. Сгенерировать список стран в Select countries
+      2. При выборе страны генерировать еще один Select со списком
+        городов этой страны и вывести этот селект в блок result
+      3. При выборе города нужно случайно рандомить температуру от
+      -10 градусов до +40. Если температура
+
+        -10 до 0 то 'Солнечно' 'Легкий снегопад' 'Сильный снегопад'
+        0 до 30 то  'Солнечно' 'Дождь' 'Ветер' 'Сильный дождь'
+        30 до 40 то 'Солнечно' 'Засуха' 'Ветер'
+
+      4. Вывести сообщение на страничку
+        {Country}. В {City} {Weather} {Temperature} градусов.
+        Ukraine. В Kyiv Солнечно -10 градусов
+
+        + бонус добавить красивые картинки с погодой
+    */
+
+    function getRandomIntInclusive(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    getRandomString = function (list) {
+      return list[Math.floor((Math.random()*list.length))];
+    } 
+
+
+    window.addEventListener("load", function () {
+      var countries = ['Ukraine', 'Poland', 'USA'];
+      var UkraineCity = ['Kyiv', 'Lviv', 'Odesa', 'Charkiv'];
+      var PolandCity = ['Warszawa', 'Poznan', 'Krakow', 'Katowice'];
+      var UsaCity = ['New York', 'Los Angeles', 'Las Vegas', 'Chicago'];
+
+      var cities = {
+        'Ukraine': UkraineCity,
+        'Poland': PolandCity,
+        'USA': UsaCity
+      };
+
+      var mySelect = document.getElementById('countries');
+      var result = document.getElementById('result');
+
+      countries.forEach(function (item, key) {
+        let option = document.createElement('option');
+        option.innerText = item;
+        mySelect.appendChild(option);
+      });
+
+      mySelect.addEventListener('input', function(event) {
+        var selectOfCities = document.createElement('select');
+        var chosenCountry = event.target.value;
+
+        cities[chosenCountry].forEach(function(item) {
+          let option = document.createElement('option');
+          option.innerText = item;
+          selectOfCities.appendChild(option);
+        });
+
+        result.innerHTML = '';
+        result.appendChild(selectOfCities);
+
+        selectOfCities.addEventListener('input', function(e) {
+          let randomTemperature = getRandomIntInclusive(-10, 40);
+          let weather = '';
+
+          let coldWeather = ['Солнечно', 'Легкий снегопад', 'Сильный снегопад'];
+          let goodWeather = ['Солнечно', 'Дождь', 'Ветер', 'Сильный дождь'];
+          let hotWeather = ['Солнечно', 'Засуха', 'Ветер',];
+          
+          if (randomTemperature >= -10 && randomTemperature < 0) {
+            let randomElement = getRandomString(coldWeather);
+            weather = randomElement;
+          } else if (randomTemperature >= 0 && randomTemperature < 30) {
+            let randomElement = getRandomString(goodWeather);
+            weather = randomElement;
+          } else if (randomTemperature >= 30 && randomTemperature <= 40) {
+            let randomElement = getRandomString(hotWeather);
+            weather = randomElement;
+          }
+
+          let currentWeather = `${chosenCountry}. В ${e.target.value} ${weather} ${randomTemperature} градусов.`
+
+          let weatherResult = document.createElement('div');
+          weatherResult.innerText = currentWeather;
+
+          document.body.appendChild(weatherResult);
+
+        })
+
+      });
+
+    });
+  </script>
+</head>
+<body>
+  <select id="countries"></select>
+  <div id="result"></div>
+  
+</body>
+</html>

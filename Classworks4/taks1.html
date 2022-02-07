@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Forms Task 1</title>
+  <script>
+    /*
+      Задание:
+        Сделать валидацию формы:
+        1. Логин / Пароль не может быть пустым
+        2. Пароли должны совпадть
+        3. Пока не стоит что юзер согласен с лиц. соглашением - кнопка отправки не активна
+
+        + бонус - то поле, которое не прошло валидацию подсвечивать красным.
+                - которое прошло - подсвечивать зеленым.
+    */
+
+    window.addEventListener("load", function() {
+      var MyValidateForm = document.getElementById('MyValidateForm');
+      var login = MyValidateForm.elements.login;
+      var pas1 = MyValidateForm.elements.pas1;
+      var pas2 = MyValidateForm.elements.pas2;
+      var agreeCheckbox = document.getElementById('agree');
+      var submitBtn = document.getElementById('submit');
+
+      MyValidateForm.addEventListener("change", function() {
+        if (login.value == '') {
+          login .classList.add('error');
+          alert('Please, fill in your login');
+        } else if (pas1.value == '' ) {
+          pas1.classList.add('error');
+          alert('Please, fill in your password');
+        } else if (pas2.value == '' ) {
+          pas2.classList.add('error');
+          alert('Please, fill in your password 2');
+        } else if (pas1.value !== pas2.value) {
+          pas1.classList.add('error');
+          pas2.classList.add('error');
+          alert ('Your passwords do not match');
+        } else {
+          login.classList.add('OK');
+          pas1.classList.add('OK');
+          pas2.classList.add('OK');
+        }
+      });
+
+      agreeCheckbox.addEventListener ("change", function(event) {
+        if (event.target.checked) {
+          submitBtn.disabled = false;
+        } else {
+          submitBtn.disabled = true;
+        }
+      })
+      
+      MyValidateForm.addEventListener("submit", function(e) {
+        e.preventDefault();
+        console.log('FORM SUBMIT');
+        if (login.value === '' || pas1.value === '' || pas2.value === '') {
+          e.preventDefault();
+          console.log('validation failed!');
+        }
+      });
+
+    });
+      
+  </script>
+</head>
+<body>
+  <form id="MyValidateForm">
+    <input type="text" name='login' placeholder="Ваш логин" />
+    <input type="password" name='pas1' placeholder="Ваш пароль" />
+    <input type="password" name='pas2' placeholder="Повторите пароль" />
+    <label for="agree">
+      <span>Вы согласны с лицензионым соглашением.</span>
+      <input type="checkbox" id="agree" />
+    </label>
+    <input type="submit" id="submit" value="Отправить" disabled/>
+  </form>
+
+  <style>
+    #MyValidateForm{
+      width: 350px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #MyValidateForm input{
+      margin-bottom: 10px;
+      box-sizing: border-box;
+      padding: 10px 20px;
+    }
+    .error{
+        border: 1px solid red;
+    }
+    .OK{
+        border: 1px solid green;
+    }
+  </style>
+</body>
+</html>

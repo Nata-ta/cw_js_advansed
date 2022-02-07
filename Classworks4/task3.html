@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Form work1</title>
+  <script>
+    /*
+      Задание:
+        Создать список дел, в который можно:
+        - Добавить новый элемент
+        - Удалить элемент
+        - Задать что пункт выполнен
+
+      Шаблон элемента:
+        <li class="listItem">
+            <input type="checkbox" class="DoneCheckbox" />
+            <span class="TodoText">{add text}</span>
+            <button>Remove</button>
+        </li>
+
+    */
+    window.addEventListener("load", function () {
+      var newToDo = document.getElementById('newToDo');
+      var AddToDo = document.getElementById('AddToDo');
+      var list = document.getElementById('toDoList');
+
+      AddToDo.addEventListener('click', addListItem);
+
+      function addListItem() {
+        let listItem = document.createElement('li');
+        listItem.className = 'listItem';
+        listItem.innerHTML = `
+            <input type="checkbox" class="DoneCheckbox" />
+            <span class="TodoText">${newToDo.value}</span>
+            <button>Remove</button>
+        `;
+
+        newToDo.value = '';
+
+        let doneCheckbox = listItem.querySelector('.DoneCheckbox');
+        let doneItem = listItem.querySelector('.TodoText');
+
+        doneCheckbox.addEventListener('input', function (ev) {
+            if (ev.target.checked) {
+              doneItem.classList.add('done');
+          } else {
+              doneItem.classList.remove('done');
+          }
+        });
+
+        var removeBtn = listItem.querySelector('button');
+        removeBtn.onclick = function() {
+          var div = this.parentElement;
+          div.style.display = "none";
+        };
+
+        list.appendChild(listItem);
+      }
+
+    });
+  </script>
+</head>
+<body>
+    <header>
+      <input id="newToDo" class="textInput"/>
+      <input id="AddToDo" class="addButton" type="button" value="Add"/>
+    </header>
+    <ul id="toDoList"></ul>
+
+  <style>
+    .done{
+      text-decoration: line-through;
+    }
+    .textInput{
+      box-sizing: border-box;
+      padding: 10px 20px;
+    }
+    .addButton{
+      box-sizing: border-box;
+      padding: 10px 20px;
+      background: #ffcc00;
+    }
+
+    .DoneCheckbox,
+    .TodoText{
+      margin-right: 5px;
+    }
+
+    button{
+      background: red;
+      color: #fff;
+      padding: 5px 10px;
+    }
+  </style>
+</body>
+</html>
