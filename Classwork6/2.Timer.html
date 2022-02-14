@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Homework</title>
+</head>
+<body>
+
+  <button id="start">Start</button>
+  <button id="stop">Stop</button>
+  <button id="restart">Restart</button>
+      <!--
+        Создайте счетчик секунд, который начинает отчет с 1 и заканчивается на 30,
+        также добавьте кнопки который останавливают отчет, и запускают его заново и добавьте кнопку обнуляющую отчет.
+        Также попробуйте изменить код так чтобы отчет начиналься с 30 и заканчивалься на 1.
+
+       + бонус: Сделать так что бы на каждый тик (1с/2c) менялся цвет фона. Можно на основе генератора случайного цвета с предудущих уроков.
+       + бонус: Сделать визуализацию стрелки которая идет по кругу
+            document.getElementById("myDIV").style.transform = "rotate(7deg)";
+
+       + бонус: Сделать кнопки которые выбирают режим в котором идет отсчет - обычный от 0 до 30 или реверсивный от 30 до 0
+      -->
+  <script>
+
+    document.addEventListener('DOMContentLoaded', function(){
+
+      function getRandomIntInclusive(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+      var changeColor = function () {
+        var r = getRandomIntInclusive(0, 255).toString(16);
+        var g = getRandomIntInclusive(0, 255).toString(16);
+        var b = getRandomIntInclusive(0, 255).toString(16);
+
+        document.body.style.background = `#${r}${g}${b}`;
+      }
+
+      let btnStartUp = document.getElementById('start');
+      let stopInterval = null;
+      let counter = 1;
+
+      let timeNode = document.createElement('h1');
+    
+      function startUp () {
+        stopInterval = setInterval(function(){
+          timeNode.innerHTML = counter;
+          if (counter === 30 ) {
+          clearInterval(stopInterval);
+          };
+          counter++;
+          changeColor();
+        }, 1000);
+      };
+
+      btnStartUp.addEventListener('click', startUp);
+
+      let btnStartDown = document.createElement('button');
+      btnStartDown.innerText = 'Start Countdown';
+      
+      let timer = 30;
+
+      function startDown () {
+        stopInterval = setInterval(function(){
+        timeNode.innerHTML = timer;
+          if (timer === 0 ) {
+          clearInterval(stopInterval);
+        };
+        timer--;
+        changeColor();
+        }, 1000);
+      };
+
+      document.body.appendChild(btnStartDown);
+      btnStartDown.addEventListener('click', startDown);
+
+      document.body.appendChild(timeNode);
+
+      let btnStop = document.getElementById('stop');
+      
+      function stop() {
+        clearInterval(stopInterval);
+      }
+
+      btnStop.addEventListener('click', stop);
+
+      let btnRestart = document.getElementById('restart');
+
+      function restaet() {
+        stop();
+        counter = 1;
+        startUp();
+      }
+
+      btnRestart.addEventListener('click', restaet);
+
+    })
+        
+  </script>
+</body>
+</html>

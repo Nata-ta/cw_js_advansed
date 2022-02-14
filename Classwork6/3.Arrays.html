@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Classwork</title>
+</head>
+<body>
+  <script>
+
+    /*
+      Задание:
+      1. При помощи методов изложеных ниже, переформатировать ITEA_COURSES в массив который содержит длину строк каждого из элементов.
+      2. Отфильтровать массив ITEA_COURSES по алфавиту.
+          + Бонусный бал. Вывести на страничку списком
+      3. Реализация функции поиска по массиву ITEA_COURSES.
+          + Бонусный бал. Вывести на страничку инпут и кнопку по которой будет срабатывать поиск.
+    */
+
+    const ITEA_COURSES = ["Курс HTML & CSS", "JavaScript базовый курс", "JavaScript продвинутый курс", "JavaScript Professional", "Angular 2.4 (базовый)", "Angular 2.4 (продвинутый)", "React.js", "React Native", "Node.js", "Vue.js"];
+
+    let MappedArray = ITEA_COURSES.map(element => Array.from(element).length);
+
+    let SORTED_ITEA_COURSES = ITEA_COURSES.sort();
+
+    const RenderInDom = (name) => {
+      let div = document.createElement('div');
+      div.innerText = name;
+      document.body.appendChild(div);
+    };
+
+    SORTED_ITEA_COURSES.map(RenderInDom);
+
+    let myInput = document.createElement('input');
+    let addBtn = document.createElement('button');
+    addBtn.innerText = 'Find';
+    let list = document.createElement('ul');
+
+    addBtn.addEventListener('click', addItem);
+
+    function addItem() {
+      let listItem = document.createElement('li');
+
+      if (ITEA_COURSES.includes(myInput.value)) {
+        ITEA_COURSES.find(element => element = myInput.value);
+        listItem.innerHTML = myInput.value;
+      } else {
+        alert('We do not have such courses! Try something else.');
+        myInput.value = '';
+        return;
+      };
+
+      myInput.value = '';
+
+      list.appendChild(listItem);
+    }
+    
+    document.body.appendChild(myInput);
+    document.body.appendChild(addBtn);
+    document.body.appendChild(list);
+
+    /*
+      Задание 2:
+      Написать фильтр массива по:
+      Актеру, продолжительности
+
+      Бонус:
+        Сделать графическую оболочку для программы:
+        - Селект со списком актеров
+        - Селект или инпут с продолжительностью
+        - Результат в виде списка фильмов
+    */
+
+      var stars = ['Elijah Wood', 'Ian McKellen', 'Orlando Bloom','Ewan McGregor','Liam Neeson', 'Natalie Portman', 'Ewan McGregor', 'Billy Bob Thornton', 'Martin Freeman']
+      var movies = [
+            {
+              name: "Lord of the Rigs",
+              duration: 240,
+              starring: [ 'Elijah Wood', 'Ian McKellen', 'Orlando Bloom']
+            },
+            {
+              name: "Star Wars: Episode I - The Phantom Menace",
+              duration: 136,
+              starring: [ 'Ewan McGregor','Liam Neeson', 'Natalie Portman']
+            },
+            {
+              name: "Fargo",
+              duration: 100,
+              starring: [ 'Ewan McGregor', 'Billy Bob Thornton', 'Martin Freeman']
+            },
+            {
+            name: "V for Vendetta",
+            duration: 150,
+            starring: [ 'Hugo Weaving', 'Natalie Portman', 'Rupert Graves']
+          }
+        ];
+
+      let filteredBySrars = (star) => movies.filter(item => item.starring.includes(star));
+
+      let filteredByLength = (length) => movies.filter(item => item.duration >= length);
+
+      let myStarsSelect = document.createElement('select');
+      let moviesLenthSelect = document.createElement('select');
+      let result = document.createElement('div');
+
+      let moviesList = function(array) {
+        result.innerHTML = array.map(item => {
+          return `
+                  <h2>${item.name}</h2>
+                  <p>${item.duration} min</p>
+                  <p>${item.starring.join('<br>')}</p>
+                  `
+        })
+      }
+      
+      stars.forEach(function(item) {
+        let option = document.createElement('option');
+        option.innerText = item;
+        myStarsSelect.appendChild(option);
+      });
+
+      movies.forEach(function(item) {
+        let option = document.createElement('option');
+        option.innerText = item.duration;
+        moviesLenthSelect.appendChild(option);
+      });
+      
+      myStarsSelect.addEventListener('change', function() {
+        moviesList(filteredBySrars(myStarsSelect.options[myStarsSelect.selectedIndex].value));
+      });
+
+      moviesLenthSelect.addEventListener('change', function() {
+        moviesList(filteredByLength(moviesLenthSelect.options[moviesLenthSelect.selectedIndex].value));
+      });
+      
+      moviesList(movies);
+
+      document.body.appendChild(myStarsSelect);
+      document.body.appendChild(moviesLenthSelect);
+      document.body.appendChild(result);
+
+    </script>
+</body>
+</html>

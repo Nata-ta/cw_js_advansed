@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Classwork</title>
+
+    <script>
+    /*
+      Задание:
+        1. Используя интерфейс который есть на страничке, написать визуальный
+        конструктор обектов используя значение key-value, которые вводятся в
+        соответствующие поля в форме.
+
+        2. Каждый созданый обьект выводить в тег code после добавления каждого
+        нового поля. Т.е мы должны визуально видить в каком состоянии наши обьекты
+        сейчас
+
+        3. По нажатию кнопки Combine Objects! два обьекта должны обьедениться
+        используя метод Object.assing или spread operator и вывестись на стринчку.
+
+        * Изменять HTML можно.
+
+    */
+    document.addEventListener('DOMContentLoaded', () => {
+      let firstForm = document.querySelector('#firstForm');
+      let secondForm = document.querySelector('#secondForm');
+      let resultBtn = document.querySelector('#resultBtn');
+      let result = document.querySelector('#result');
+      let firstCode = document.querySelector('.firstCode');
+      let secondCode = document.querySelector('.secondCode');
+
+      let firstCreatedObj = {};
+      let secondCreatedObj = {};
+
+      const manipulateObj = (e, obj, elem) => {
+          e.preventDefault();          
+
+          obj[e.target.key.value] = e.target.value.value;
+
+          elem.innerText = JSON.stringify(obj);
+        }
+
+      
+      firstForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        firstCreatedObj[event.target.key.value] = event.target.value.value;
+
+        firstCode.innerText = JSON.stringify(firstCreatedObj);
+          
+        manipulateObj(event, firstCreatedObj, firstCode);
+        
+      })
+
+      secondForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        secondCreatedObj[event.target.key.value] = event.target.value.value;
+
+        secondCode.innerText = JSON.stringify(secondCreatedObj);
+          
+        manipulateObj(event, secondCreatedObj, secondCode);
+        
+      })
+
+      resultBtn.addEventListener('click', function() { 
+        let combinedObjts = Object.assign(firstCreatedObj, secondCreatedObj);
+
+        result.innerText = JSON.stringify(combinedObjts);
+
+        firstCode.innerHTML = '';
+        secondCode.innerHTML = '';
+      })
+    })
+    </script>
+</head>
+<body>
+  <div class="wrap">
+      <div id="firstForm" class="assigned">
+        <form class="ObjForm">
+            <input name="key" placeholder="Enter your key" required/>
+            <input name="value" placeholder="Enter your value" required/>
+            <button type="submit">Send</button>
+        </form>
+        <div class="createResult">
+          <header>
+            Created Object
+          </header>
+          <div class="createdObj">
+            <code class="firstCode"></code>
+          </div>
+        </div>
+      </div>
+
+      <div id="secondForm" class="assigned">
+        <form class="ObjForm">
+          <input name="key" placeholder="Enter your key" required/>
+          <input name="value" placeholder="Enter your value" required/>
+          <button type="submit">Send</button>
+        </form>
+        <div class="createResult">
+          <header>
+            Created Object
+          </header>
+          <div class="createdObj">
+            <code class="secondCode"></code>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="resultBlock">
+       <button id="resultBtn">Combine Objects!</button>
+      <h3> Result: </h3>
+      <div id="result"></div>
+    </div>
+
+      <script>
+
+      </script>
+      <style>
+        .wrap{
+          width: 800px;
+        }
+        .ObjForm,
+        .resultBlock{
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          box-sizing: border-box;
+          padding: 10px 20px;
+        }
+
+        .assigned{
+          width: 300px;
+        }
+        .createResult header{
+          font-weight: 700;
+        }
+      </style>
+</body>
+</html>
