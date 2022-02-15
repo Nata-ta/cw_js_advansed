@@ -38,14 +38,18 @@ function changeElem(str, num) {
   var encrept = arrOfStr.map(i => {
     var numb = i.charCodeAt();
     var testNumber = numb + num;
+    const firstUpperCaseIndex = 65;
+    const lastUpperCaseIndex = 90;
+    const firstLowerCaseIndex = 97;
+    const lastLowerCaseIndex = 122;
 
     if (i === i.toUpperCase()) {
-      if (numb + num >= 90) {
-        testNumber = (65 + num) - (numb + num - 90);
+      if (numb + num >= lastUpperCaseIndex) {
+        testNumber = (firstUpperCaseIndex + num) - (numb + num - lastUpperCaseIndex);
       }
     } else if (i === i.toLowerCase()) {
-      if (numb + num >= 122) {
-        testNumber = (97 + num) - (numb + num - 122);
+      if (numb + num >= lastLowerCaseIndex) {
+        testNumber = (firstLowerCaseIndex + num) - (numb + num - lastLowerCaseIndex);
       }
     }
 
@@ -62,15 +66,19 @@ function deShifrStr(str, num) {
 
   var encrept = arrOfStr.map(i => {
     var crept = i.charCodeAt();
-    var testNum = crept - num;;
+    var testNum = crept - num;
+    const firstUpperCaseIndex = 65;
+    const lastUpperCaseIndex = 90;
+    const firstLowerCaseIndex = 97;
+    const lastLowerCaseIndex = 122;
 
     if (i === i.toUpperCase()) {
-      if (crept - num < 65) {
-        testNum = (90 + num) - (crept + num - 65);
+      if (crept - num < firstUpperCaseIndex) {
+        testNum = (lastUpperCaseIndex + num) - (crept + num - firstUpperCaseIndex);
       }
     } else if (i === i.toLowerCase()) {
-      if (crept - num < 97) {
-        testNum = (122 + num) - (crept + num - 97);
+      if (crept - num < firstLowerCaseIndex) {
+        testNum = (lastLowerCaseIndex + num) - (crept + num - firstLowerCaseIndex);
       }
     }
 

@@ -24,8 +24,6 @@
       var AddToDo = document.getElementById('AddToDo');
       var list = document.getElementById('toDoList');
 
-      AddToDo.addEventListener('click', addListItem);
-
       function addListItem() {
         let listItem = document.createElement('li');
         listItem.className = 'listItem';
@@ -50,13 +48,14 @@
 
         var removeBtn = listItem.querySelector('button');
         removeBtn.onclick = function() {
-          var div = this.parentElement;
+          var div = removeBtn.closest('.listItem');
           div.style.display = "none";
         };
 
         list.appendChild(listItem);
       }
 
+      AddToDo.addEventListener('click', addListItem);
     });
   </script>
 </head>

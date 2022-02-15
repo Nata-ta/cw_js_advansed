@@ -23,26 +23,13 @@
       var agreeCheckbox = document.getElementById('agree');
       var submitBtn = document.getElementById('submit');
 
-      MyValidateForm.addEventListener("change", function() {
-        if (login.value == '') {
-          login .classList.add('error');
-          alert('Please, fill in your login');
-        } else if (pas1.value == '' ) {
-          pas1.classList.add('error');
-          alert('Please, fill in your password');
-        } else if (pas2.value == '' ) {
-          pas2.classList.add('error');
-          alert('Please, fill in your password 2');
-        } else if (pas1.value !== pas2.value) {
-          pas1.classList.add('error');
-          pas2.classList.add('error');
-          alert ('Your passwords do not match');
-        } else {
-          login.classList.add('OK');
-          pas1.classList.add('OK');
-          pas2.classList.add('OK');
-        }
-      });
+      var checkIfEmpty = (element) => {
+        return element.length === 0;
+      }
+
+      var checkpasswords = (pass, checkPass) => {
+        return pass === checkPass;
+      }
 
       agreeCheckbox.addEventListener ("change", function(event) {
         if (event.target.checked) {
@@ -51,23 +38,51 @@
           submitBtn.disabled = true;
         }
       })
-      
-      MyValidateForm.addEventListener("submit", function(e) {
+
+      MyValidateForm.addEventListener("submit", function() {
         e.preventDefault();
-        console.log('FORM SUBMIT');
-        if (login.value === '' || pas1.value === '' || pas2.value === '') {
-          e.preventDefault();
-          console.log('validation failed!');
+
+        var valid = true;
+
+        if(checkIfEmpty(login.value)) {
+          valid = false;
+          login.classList.add('error');
+        } else {
+          login.classList.add('OK');
+        }
+
+        if(checkIfEmpty(pas1.value)) {
+          valid = false;
+          pas1.classList.add('error');
+        } else {
+          pas1.classList.add('OK');
+        }
+
+        if(checkIfEmpty(pas2.value)) {
+          valid = false;
+          pas2.classList.add('error');
+        } else {
+          pas2.classList.add('OK');
+        }
+
+        if (!checkpasswords(pas1.value, pas2.value)) {
+          valid = false;
+          pas2.classList.add('error');
+        } else {
+          pas2.classList.add('OK');
+        }
+        
+        if (valid) {
+          alert('FORM SUBMIT')
         }
       });
-
     });
       
   </script>
 </head>
 <body>
   <form id="MyValidateForm">
-    <input type="text" name='login' placeholder="Ваш логин" />
+    <input type="text" name='login' placeholder="Ваш логин" required/>
     <input type="password" name='pas1' placeholder="Ваш пароль" />
     <input type="password" name='pas2' placeholder="Повторите пароль" />
     <label for="agree">
