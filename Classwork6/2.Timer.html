@@ -47,9 +47,9 @@
       function startUp () {
         stopInterval = setInterval(function(){
           timeNode.innerHTML = counter;
-          if (counter === 30 ) {
-          clearInterval(stopInterval);
-          };
+            if (counter === 30 ) {
+              clearInterval(stopInterval);
+            };
           counter++;
           changeColor();
         }, 1000);
@@ -64,12 +64,12 @@
 
       function startDown () {
         stopInterval = setInterval(function(){
-        timeNode.innerHTML = timer;
-          if (timer === 0 ) {
-          clearInterval(stopInterval);
-        };
-        timer--;
-        changeColor();
+          timeNode.innerHTML = timer;
+            if (timer === 0 ) {
+              clearInterval(stopInterval);
+          };
+          timer--;
+          changeColor();
         }, 1000);
       };
 

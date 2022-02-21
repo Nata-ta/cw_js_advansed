@@ -35,31 +35,27 @@ usersList.then(res => {
       <td>${element.username}</td>
       <td>${element.email}</td>
       <td >
-        <button id="webBtn">Click to see</button>
+        <button class="_webBtn">Click to see</button>
       </td>
       <td >
-        <button id="phoneBtn">Click to see</button>
+        <button class="_phoneBtn">Click to see</button>
       </td>
     `;
 
     tbody.appendChild(tr);
 
-    let webBtns = document.querySelectorAll('#webBtn');
-    webBtns.forEach(button => {
-      button.addEventListener('click', function () {
-        button.style.display = "none";
-        let info = button.closest('td');
-        info.innerText = `${element.website}`;
-      })
+    let webBtn = tr.querySelector('._webBtn');
+    webBtn.addEventListener('click', function () {
+      webBtn.style.display = "none";
+      let info = webBtn.closest('td');
+      info.innerText = `${element.website}`;
     });
 
-    let phoneBtn = document.querySelectorAll('#phoneBtn');
-    phoneBtn.forEach(button => {
-      button.addEventListener('click', function () {
-        button.style.display = "none";
-        let info = button.closest('td');
-        info.innerText = `${element.phone}`;
-      })
+    let phoneBtn = tr.querySelector('._phoneBtn');
+    phoneBtn.addEventListener('click', function () {
+      phoneBtn.style.display = "none";
+      let info = phoneBtn.closest('td');
+      info.innerText = `${element.phone}`;
     })
 
   })

@@ -17,21 +17,23 @@
             День нужно возвратить в div#result в текстовом формате т.е понедельник, вторник, суббота и т.д
           */
 
-          function getWeekDay(date) {
-                let days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
+          
+          let MyDateSelector = document.getElementById('MyDateSelector');
+          let result = document.getElementById('result');
+          let showDate = document.getElementById('ShowDayButton');
 
-                return days[date.getDay()];
-            }
+          function getWeekDay(date) {
+            let days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
+
+            return days[date.getDay()];
+          }
 
           function getDate() {
-            let MyDateSelector = document.getElementById('MyDateSelector');
             let todayDate = new Date (MyDateSelector.value);
 
-            let result = document.getElementById('result');
             result.innerText = getWeekDay(todayDate);
           }
 
-          let showDate = document.getElementById('ShowDayButton');
           showDate.addEventListener('click', getDate);
       </script>
 </body>

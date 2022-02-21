@@ -76,8 +76,6 @@ const getAllPosts = (e) => {
                 <div class="card-body" data-id="${el.id}">
                     <h5 class="card-title">${el.title}</h5>
                     <p class="card-text">${el.body}</p>
-                    <button type="button" class="btn btn-primary addLike">Add like</button>
-                    <span>Likes ${el.likes}</span>
                 </div>
             `;
 
@@ -108,8 +106,14 @@ class Post {
         this.render();
     }
 
-    addLike = () => {
-        return this.likes++;
+    addLike(element) {
+        let likeBtn = element.querySelector('button');
+        let newLike = element.querySelector('span');
+
+        likeBtn.addEventListener('click', () => {
+            this.likes++;
+            newLike.innerHTML = `Likes ${this.likes}`;
+        })
     }
 
     render = () => {
@@ -124,6 +128,8 @@ class Post {
                 <span>Likes ${this.likes}</span>
             </div>
         `;
+
+        this.addLike(elem);
 
         postsContainer.appendChild(elem);
     }
